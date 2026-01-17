@@ -1,0 +1,47 @@
+# Android
+*.apk
+*.obb
+*.ap_
+*.dex
+*.class
+build/
+.gradle/
+.idea/
+*.iml
+*.iws
+*.ipr
+local.properties
+gradlew
+gradlew.bat
+
+# Firebase
+google-services.json
+*.plist
+
+# Environment
+.env
+.env.local
+.env.prod
+keystore.jks
+keystore.properties
+
+# IDE
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+
+# Git
+.git/
+
+# Node (for some build tools)
+node_modules/
+npm-debug.log
+
+# Misc
+*.log
+tmp/
+temp/
+.cache/
