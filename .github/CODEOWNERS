@@ -1,0 +1,24 @@
+# Code Owners for Face Recognition Attendance System
+# These users will be automatically requested for review when someone opens a PR
+
+# Default owner for everything
+* @preethamdev05
+
+# Security-related files
+/proguard-rules.pro @preethamdev05
+/src/main/kotlin/com/attendance/facerec/util/SecurityUtils.kt @preethamdev05
+/src/main/res/xml/network_security_config.xml @preethamdev05
+
+# Build configuration
+/build.gradle.kts @preethamdev05
+/gradle/ @preethamdev05
+/settings.gradle.kts @preethamdev05
+
+# CI/CD workflows
+/.github/workflows/ @preethamdev05
+
+# Documentation
+/README.md @preethamdev05
+/CONTRIBUTING.md @preethamdev05
+/SECURITY.md @preethamdev05
+/ARCHITECTURE.md @preethamdev05

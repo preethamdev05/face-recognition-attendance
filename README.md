@@ -1,308 +1,252 @@
 # Face Recognition Attendance System
 
-Production-grade Face Recognition Attendance System in Kotlin using Android Studio, Firebase ML Kit for face detection, and Firebase Realtime Database for attendance tracking.
+[![CI](https://github.com/preethamdev05/face-recognition-attendance/actions/workflows/ci.yml/badge.svg)](https://github.com/preethamdev05/face-recognition-attendance/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-blue.svg)](https://kotlinlang.org)
+[![Android](https://img.shields.io/badge/Android-21%2B-green.svg)](https://developer.android.com)
 
-## Features
+A production-grade Android application for automated attendance tracking using face recognition technology. Built with Clean Architecture, MVVM, and modern Android development best practices.
 
-✅ Firebase Authentication with Role-Based Access Control  
-✅ Multi-face Student Registration (5-8 photos)  
-✅ Real-time Face Recognition & Attendance Marking  
-✅ Advanced Liveness Detection  
-✅ Firebase Storage with Image Compression  
-✅ Offline-first Architecture with Room Database  
-✅ Analytics Dashboard with Reports  
-✅ Kotlin Coroutines for Async Operations  
-✅ Hilt Dependency Injection  
-✅ Material Design 3 UI  
-✅ Complete Error Handling with Result Sealed Class  
+## ✨ Features
 
-## Technical Stack
+### Core Functionality
+- **Face Recognition**: Real-time face detection and recognition using ML Kit and TensorFlow Lite
+- **Attendance Tracking**: Automated attendance marking with timestamp and location
+- **Multi-face Detection**: Support for multiple students in a single frame
+- **Offline Support**: Local caching with background sync using WorkManager
+- **Admin Dashboard**: Comprehensive reports and analytics
+- **Biometric Authentication**: Fingerprint/face unlock for secure access
 
-- **Language**: Kotlin (SDK 21+, Target 34)
-- **Build Tool**: Gradle 8.0+
-- **Face Detection**: Firebase ML Kit
-- **Face Recognition**: TensorFlow Lite + FaceNet
-- **Backend**: Firebase (Auth, Realtime DB, Storage, Cloud Functions)
-- **Local DB**: Room
-- **Image Processing**: CameraX API
-- **Async**: Kotlin Coroutines
-- **DI**: Hilt
-- **UI**: Material Design 3
+### Security
+- Root and emulator detection with graceful UX handling
+- AES-256-GCM encryption for sensitive data
+- Network security config (HTTPS-only)
+- ProGuard/R8 obfuscation for release builds
+- Firebase security rules with role-based access control
 
-## Project Structure
+### Technical Highlights
+- **Clean Architecture + MVVM**: Separation of concerns with testable code
+- **Kotlin Coroutines & Flow**: Reactive programming for async operations
+- **Hilt Dependency Injection**: Type-safe DI framework
+- **Room Database**: Local persistence with migrations
+- **CameraX**: Modern camera API with lifecycle awareness
+- **Material Design 3**: Modern UI/UX following Material guidelines
+
+## 📱 Screenshots
+
+> Add screenshots here
+
+## 🏗️ Architecture
 
 ```
-app/src/main/kotlin/com/attendance/facerec/
-├── presentation/          # UI Layer (Activities, Fragments, ViewModels)
-├── domain/               # Business Logic (Models, Use Cases)
-├── data/                 # Data Layer (Repositories, DB, API)
-├── service/              # Background Services
-├── util/                 # Utilities & Constants
-└── FaceRecognitionApp.kt # Application Entry Point
+┌─────────────────────────────────────────┐
+│         Presentation Layer              │
+│  (Activities, Fragments, ViewModels)    │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│          Domain Layer                   │
+│    (Models, Use Cases, Repositories)    │
+└──────────────┬──────────────────────────┘
+               │
+┌──────────────▼──────────────────────────┐
+│           Data Layer                    │
+│   (Room DB, Firebase, Repositories)     │
+└─────────────────────────────────────────┘
 ```
 
-## Getting Started
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed documentation.
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- **Android Studio Giraffe (2022.3.1) or later**
-- **JDK 17+**
-- **Kotlin 1.9.20+**
-- **Firebase Project** with Authentication, Realtime Database, and Storage enabled
-- **Google Cloud Project** for ML Kit
+- **Android Studio Giraffe (2022.3.1)** or later
+- **JDK 17** (Oracle JDK or OpenJDK)
+- **Android SDK 34**
+- **Gradle 8.0+** (included via wrapper)
+- **Firebase Project** (for backend services)
 
 ### Installation
 
-#### 1. Clone the Repository
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/preethamdev05/face-recognition-attendance.git
+   cd face-recognition-attendance
+   ```
 
+2. **Create Firebase project:**
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Create a new project
+   - Add an Android app with package name: `com.attendance.facerec`
+   - Download `google-services.json` and place it in `app/` directory
+
+3. **Configure secrets:**
+   ```bash
+   cp local.properties.example local.properties
+   ```
+   
+   Edit `local.properties` and add your Firebase credentials:
+   ```properties
+   firebase.database.url=https://your-project-id.firebaseio.com
+   firebase.storage.bucket=your-project-id.appspot.com
+   sdk.dir=/path/to/Android/sdk
+   ```
+
+4. **Install Git hooks:**
+   ```bash
+   cp pre-commit .git/hooks/pre-commit
+   chmod +x .git/hooks/pre-commit
+   ```
+
+5. **Sync and build:**
+   ```bash
+   ./gradlew build
+   ```
+
+6. **Run on device/emulator:**
+   ```bash
+   ./gradlew installDebug
+   ```
+
+## 🧪 Testing
+
+### Run Unit Tests
 ```bash
-git clone https://github.com/preethamdev05/face-recognition-attendance.git
-cd face-recognition-attendance
-```
-
-#### 2. Configure Firebase
-
-**a. Download Firebase Configuration:**
-- Go to [Firebase Console](https://console.firebase.google.com/)
-- Select your project
-- Go to **Project Settings** → **Your Apps** → **Android App**
-- Download `google-services.json`
-- **Place it in `app/` directory** (root of app module)
-
-**b. Configure Local Properties:**
-
-```bash
-# Copy the example file
-cp local.properties.example local.properties
-```
-
-Edit `local.properties` and add your Firebase credentials:
-
-```properties
-# Firebase Configuration
-firebase.database.url=https://your-project-id.firebaseio.com
-firebase.storage.bucket=your-project-id.appspot.com
-
-# Android SDK (auto-generated by Android Studio)
-sdk.dir=/path/to/Android/sdk
-```
-
-**⚠️ IMPORTANT:** Never commit `local.properties` or `google-services.json` to version control. They are git-ignored by default.
-
-#### 3. Install Git Hooks (Code Quality)
-
-```bash
-cp pre-commit .git/hooks/pre-commit
-chmod +x .git/hooks/pre-commit
-```
-
-This enforces ktlint and detekt checks before every commit.
-
-#### 4. Sync and Build
-
-Open the project in Android Studio and let Gradle sync. Then:
-
-```bash
-# Run static analysis
-./gradlew ktlintCheck detekt
-
-# Build debug APK
-./gradlew assembleDebug
-
-# Build release APK
-./gradlew assembleRelease
-
-# Install on connected device
-./gradlew installDebug
-```
-
-## Architecture
-
-Follows **Clean Architecture + MVVM** pattern:
-
-### Layers
-
-```
-┌─────────────────────────────────────┐
-│     Presentation Layer (UI)         │
-│  Activities, Fragments, ViewModels  │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│       Domain Layer (Logic)          │
-│   Models, Use Cases, Interfaces     │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│      Data Layer (Sources)           │
-│  Repositories, Room DB, Firebase    │
-└─────────────────────────────────────┘
-```
-
-### Key Patterns
-
-- **MVVM**: Separation of UI and business logic
-- **Repository Pattern**: Abstract data sources
-- **Dependency Injection**: Hilt for loose coupling
-- **Coroutines**: Async operations with structured concurrency
-- **StateFlow**: Reactive state management
-- **Result Sealed Class**: Type-safe error handling
-
-## Key Components
-
-### Authentication
-- Email/Password Login
-- Phone Number Authentication
-- Two-Factor Authentication (OTP)
-- Biometric Authentication (Fingerprint/Face)
-
-### Student Registration
-- Multi-angle Face Capture (5-8 photos)
-- Image Validation (Size, Quality, Lighting)
-- Liveness Detection (Prevents photo spoofing)
-- Facial Encoding Generation (128D embeddings)
-
-### Attendance Marking
-- Real-time Camera Feed (30fps)
-- Face Detection (ML Kit)
-- Face Recognition (FaceNet + cosine similarity)
-- Location Tracking (GPS verification)
-- Confidence Scoring (>60% threshold)
-- Duplicate Prevention (5-minute window lock)
-
-### Dashboard
-- Attendance Summary (Present/Late/Absent)
-- Real-time Analytics
-- PDF/Excel Report Export
-- Trend Analysis & Charts
-
-## Database Schema
-
-### Firebase Realtime Database
-
-```
-attendance-system/
-├── students/{studentId}/
-│   ├── name: string
-│   ├── email: string
-│   ├── enrollmentDate: timestamp
-│   └── faceEncodings: [float128[]]
-│
-├── attendance/{classId}/{date}/{studentId}/
-│   ├── timestamp: long
-│   ├── status: "present"|"late"|"absent"
-│   ├── confidence: float
-│   └── location: {lat, lng}
-│
-├── classes/{classId}/
-│   ├── name: string
-│   ├── instructor: string
-│   └── schedule: {}
-│
-└── admins/{adminId}/
-    ├── role: "admin"|"instructor"
-    └── permissions: []
-```
-
-### Room Local Database
-
-- **AttendanceEntity**: Offline cache for sync
-- **StudentEntity**: Student profiles
-- **ClassEntity**: Class information
-
-## Testing
-
-### Run Tests
-
-```bash
-# Unit tests
 ./gradlew test
-
-# Instrumented tests (requires device/emulator)
-./gradlew connectedAndroidTest
-
-# Specific test class
-./gradlew test --tests FaceRecognitionTest
-
-# Code coverage
-./gradlew jacocoTestReport
 ```
 
-### Static Analysis
-
+### Run Instrumented Tests
 ```bash
-# Kotlin linting (auto-format)
-./gradlew ktlintFormat
-
-# Kotlin linting (check only)
-./gradlew ktlintCheck
-
-# Detekt (code smells)
-./gradlew detekt
-
-# All checks
-./gradlew check
+./gradlew connectedAndroidTest
 ```
 
-## Performance Metrics
+### Run Static Analysis
+```bash
+# Ktlint (code formatting)
+./gradlew ktlintCheck
+./gradlew ktlintFormat  # Auto-fix
 
-- **Image Compression**: 70% size reduction (85% JPEG quality)
-- **Face Detection**: <500ms per frame (ML Kit)
-- **Face Recognition**: <2 seconds end-to-end
-- **Batch Upload**: 50 records per transaction
-- **Pagination**: 50 records per page
-- **App Size**: ~15MB (release APK with R8)
+# Detekt (static analysis)
+./gradlew detekt
+```
 
-## Security
+### Security Verification
+```bash
+chmod +x verify_phase2.sh
+./verify_phase2.sh
+```
 
-### Implemented Security Measures
+## 📦 Building for Production
 
-- ✅ **AES-256-GCM Encryption** for sensitive data at rest
-- ✅ **HTTPS-only** Firebase connections (TLS 1.3)
-- ✅ **Firebase Security Rules** with role-based access control
-- ✅ **API Key Restrictions** (Android package name + SHA-1)
-- ✅ **Network Security Config** (blocks cleartext traffic)
-- ✅ **Root Detection** (graceful UX, no crash)
-- ✅ **ProGuard/R8 Obfuscation** (release builds)
-- ✅ **No Hardcoded Secrets** (BuildConfig injection)
-- ✅ **Firebase Crashlytics** (crash reporting)
-- ✅ **Audit Logging** for admin actions
+### 1. Create Keystore
+```bash
+keytool -genkey -v -keystore keystore.jks -keyalg RSA \
+  -keysize 2048 -validity 10000 -alias attendance-key
+```
 
-### Reporting Security Issues
+### 2. Build Release APK
+```bash
+./gradlew assembleRelease
+```
 
-**DO NOT** open public GitHub issues for vulnerabilities. See [SECURITY.md](SECURITY.md) for responsible disclosure.
+### 3. Sign APK
+```bash
+jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+  -keystore keystore.jks app/build/outputs/apk/release/app-release-unsigned.apk \
+  attendance-key
 
-## Contributing
+zipalign -v 4 app/build/outputs/apk/release/app-release-unsigned.apk \
+  app/build/outputs/apk/release/app-release-signed.apk
+```
 
-We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting PRs.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment guide.
+
+## 🤝 Contributing
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on:
+
+- Development workflow
+- Coding standards (Ktlint + Detekt)
+- Commit message conventions (Conventional Commits)
+- Pull request process
 
 ### Quick Start for Contributors
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feat/amazing-feature`
-3. Follow coding standards (ktlint + detekt)
-4. Write tests for new features
-5. Commit using Conventional Commits: `git commit -m "feat: add feature"`
-6. Push and open a PR
+```bash
+# Fork and clone
+git clone https://github.com/YOUR_USERNAME/face-recognition-attendance.git
 
-## License
+# Create feature branch
+git checkout -b feat/your-feature-name
 
-MIT License - See [LICENSE](LICENSE) file for details.
+# Make changes and commit
+git commit -m "feat: add your feature"
 
-## Support
+# Push and create PR
+git push origin feat/your-feature-name
+```
 
-- **Issues**: [GitHub Issues](https://github.com/preethamdev05/face-recognition-attendance/issues)
-- **Email**: support@attendance-system.dev
-- **Documentation**: [Wiki](https://github.com/preethamdev05/face-recognition-attendance/wiki)
+## 🔒 Security
 
-## Acknowledgments
+Security is a top priority. Please read our [SECURITY.md](SECURITY.md) for:
 
-- Firebase ML Kit for face detection
-- TensorFlow Lite for FaceNet inference
-- CameraX for modern camera API
-- Hilt for dependency injection
-- Material Design 3 for UI components
+- Supported versions
+- Reporting vulnerabilities (email: support@attendance-system.dev)
+- Security best practices
+
+**Do not open public issues for security vulnerabilities.**
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [ML Kit](https://developers.google.com/ml-kit) for face detection
+- [TensorFlow Lite](https://www.tensorflow.org/lite) for face recognition models
+- [Firebase](https://firebase.google.com/) for backend services
+- [Android Jetpack](https://developer.android.com/jetpack) for modern Android components
+
+## 📞 Contact
+
+- **Email:** support@attendance-system.dev
+- **GitHub Issues:** [Create an issue](https://github.com/preethamdev05/face-recognition-attendance/issues/new/choose)
+- **Discussions:** [Join the discussion](https://github.com/preethamdev05/face-recognition-attendance/discussions)
+
+## 📊 Project Status
+
+- ✅ Core face recognition functionality
+- ✅ Attendance tracking and reporting
+- ✅ Admin dashboard
+- ✅ Offline support with sync
+- ✅ Security hardening
+- 🚧 Play Store release (planned)
+- 🚧 Multi-language support (planned)
+- 🚧 Dark mode (planned)
+
+## 🗺️ Roadmap
+
+### v1.1.0 (Q2 2026)
+- [ ] Dark mode support
+- [ ] Multi-language (Hindi, Tamil, Telugu)
+- [ ] Export reports to PDF/Excel
+- [ ] QR code attendance fallback
+
+### v1.2.0 (Q3 2026)
+- [ ] Wear OS companion app
+- [ ] NFC attendance support
+- [ ] Advanced analytics dashboard
+- [ ] Notification system for admins
+
+### v2.0.0 (Q4 2026)
+- [ ] Cloud-based face recognition (scalability)
+- [ ] Multi-tenant support
+- [ ] REST API for integrations
+- [ ] Web admin portal
 
 ---
 
-**Built with ❤️ using Kotlin and Firebase**
+**Made with ❤️ by Preetham**
+
+**Star ⭐ this repository if you find it useful!**
