@@ -1,0 +1,20 @@
+# Auto detect text files and normalize line endings to LF
+* text=auto
+
+# Gradle files
+*.gradle eol=lf
+*.gradle.kts eol=lf
+gradlew eol=lf
+
+# Kotlin files
+*.kt eol=lf
+*.kts eol=lf
+
+# JSON
+*.json eol=lf
+
+# XML
+*.xml eol=lf
+
+# Markdown
+*.md eol=lf

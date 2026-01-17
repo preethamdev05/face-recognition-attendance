@@ -1,0 +1,42 @@
+{
+  "rules": {
+    "students": {
+      "$studentId": {
+        ".read": "auth.uid != null && (root.child('admins').child(auth.uid).exists() || auth.uid == $studentId)",
+        ".write": "root.child('admins').child(auth.uid).exists()",
+        ".validate": "newData.hasChildren(['name', 'email', 'enrollmentDate'])"
+      }
+    },
+    "attendance": {
+      "$classId": {
+        "$date": {
+          "$studentId": {
+            ".read": "auth.uid != null",
+            ".write": "auth.uid != null",
+            ".validate": "newData.hasChildren(['timestamp', 'status'])"
+          }
+        }
+      }
+    },
+    "classes": {
+      "$classId": {
+        ".read": "auth.uid != null",
+        ".write": "root.child('admins').child(auth.uid).exists()"
+      }
+    },
+    "admins": {
+      "$adminId": {
+        ".read": "auth.uid == $adminId",
+        ".write": "auth.uid == $adminId"
+      }
+    },
+    "users": {
+      "$userId": {
+        ".read": "auth.uid == $userId || root.child('admins').child(auth.uid).exists()",
+        ".write": "auth.uid == $userId || root.child('admins').child(auth.uid).exists()"
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}
