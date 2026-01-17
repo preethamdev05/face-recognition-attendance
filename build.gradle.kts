@@ -7,6 +7,35 @@ plugins {
     id("com.google.gms.google-services") version "4.4.0"
     id("com.google.firebase.crashlytics") version "2.9.10"
     id("com.google.dagger.hilt.android") version "2.48"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.6"
+}
+
+ktlint {
+    version.set("1.2.1")
+    android.set(true)
+    outputToConsole.set(true)
+    coloredOutput.set(true)
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**", "**/*.kt", "**/*.kts")
+    }
+}
+
+detekt {
+    toolVersion = "1.23.6"
+    config = files("detekt.yml")
+    buildUponDefaultConfig = true
+    autoCorrect = false
+
+    source = files(
+        "src/main/java",
+        "src/main/kotlin",
+        "src/test/java",
+        "src/test/kotlin"
+    )
+
+    parallel = true
 }
 
 android {
