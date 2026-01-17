@@ -178,7 +178,7 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.2.3")
 
     // Google Play Services
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-maps:20.0.0")
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
     // Serialization
