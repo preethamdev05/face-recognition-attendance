@@ -130,8 +130,8 @@ dependencies {
 
     // TensorFlow Lite for FaceNet
     implementation("org.tensorflow:tensorflow-lite:2.13.0")
-    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.5.0")
+    implementation("org.tensorflow:tensorflow-lite-support:0.5.0")
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
 
     // CameraX
