@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     id("com.android.application") version "8.2.0"
@@ -9,6 +10,18 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48"
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
+}
+
+// Load secrets from local.properties
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
+}
+
+fun getLocalProperty(key: String, defaultValue: String = ""): String {
+    return localProperties.getProperty(key, defaultValue)
 }
 
 ktlint {
@@ -51,6 +64,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        // Inject Firebase secrets from local.properties into BuildConfig
+        buildConfigField(
+            "String",
+            "FIREBASE_DATABASE_URL",
+            "\"${getLocalProperty("firebase.database.url", "https://default-project.firebaseio.com")}\""
+        )
+        buildConfigField(
+            "String",
+            "FIREBASE_STORAGE_BUCKET",
+            "\"${getLocalProperty("firebase.storage.bucket", "default-project.appspot.com")}\""
+        )
     }
 
     buildTypes {

@@ -1,9 +1,11 @@
 package com.attendance.facerec.util
 
+import com.attendance.facerec.BuildConfig
+
 object Constants {
-    // Firebase
-    const val FIREBASE_DATABASE_URL = "https://your-project.firebaseio.com"
-    const val FIREBASE_STORAGE_BUCKET = "your-project.appspot.com"
+    // Firebase - Now loaded from BuildConfig (injected via local.properties)
+    val FIREBASE_DATABASE_URL: String = BuildConfig.FIREBASE_DATABASE_URL
+    val FIREBASE_STORAGE_BUCKET: String = BuildConfig.FIREBASE_STORAGE_BUCKET
 
     // Face Detection
     const val MIN_FACE_SIZE = 100
