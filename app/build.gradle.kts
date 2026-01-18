@@ -183,8 +183,8 @@ dependencies {
 
     // Serialization
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.2")
 
     // Image Processing
     implementation("androidx.graphics:graphics-core:1.0.0-alpha03")
